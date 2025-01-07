@@ -10,8 +10,8 @@ import zipfile
 app = Flask(__name__)
 
 # Paths
-MODEL_PATH = r"D:/AI LEARN\model classfiy/flask/keras_model.h5"  # Path to your model
-LABELS_PATH = r"D:/AI LEARN/model classfiy/flask/labels.txt"    # Path to your labels file
+MODEL_PATH = r"flask/keras_model.h5"  # Path to your model
+LABELS_PATH = r"flask/labels.txt"    # Path to your labels file
 UPLOAD_FOLDER = "uploads"     # Folder to save uploaded images
 OUTPUT_FOLDER = r"D:/AI LEARN/model classfiy/.venv"  # Folder to save classified images
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moayad AI BDMS Renamer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        #theme-toggler {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="theme-toggler" class="btn btn-secondary">🌙 Dark Mode</div>
+    <div class="container mt-5">
+        <h1 class="text-center">Moayad AI BDMS Renamer</h1>
+        <h1 class="text-center">Developed By Moayad Dughmosh</h1>
+        <form method="POST" enctype="multipart/form-data" class="mt-4">
+            <div class="form-group">
+                <label for="files">Upload Images</label>
+                <input type="file" name="files" multiple class="form-control" accept=".png,.jpg,.jpeg,.gif" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Upload and Classify</button>
+        </form>
+        {% if message %}
+        <div class="alert alert-info mt-4">
+            {{ message }}
+        </div>
+        <div class="row">
+            {% for result in results %}
+            <div class="col-md-4 mt-3">
+                <div class="card">
+                    <img src="{{ url_for('classified_file', label=result.label, filename=result.filename) }}" class="card-img-top" alt="{{ result.filename }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.label }}</h5>
+                        <p class="card-text">Confidence: {{ result.confidence | round(2) }}</p>
+                        <a href="{{ url_for('classified_file', label=result.label, filename=result.filename) }}" target="_blank" class="btn btn-secondary">Preview</a>
+                        <a href="{{ url_for('download_file', label=result.label, filename=result.filename) }}" class="btn btn-success">Download</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const themeToggler = document.getElementById('theme-toggler');
+        themeToggler.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeToggler.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+    </script>
+</body>
+</html>
